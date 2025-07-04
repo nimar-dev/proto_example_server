@@ -1,0 +1,44 @@
+syntax ="proto3";
+
+package coffee_shop;
+
+option go_package = "./coffeeshop_protos";
+
+service CoffeeShopNimar {
+    rpc GetMenu(MenuRequest) returns (MenuResponse) {}
+    rpc PlaceOrder(order) returns (Receipt) {}
+    rpc GetOrderStatus(Receipt) returns (OrderStatus) {}
+}
+
+message MenuRequest {
+    string category = 1; // e.g., "coffee", "tea", "pastries"
+}
+
+message MenuResponse {
+    repeated MenuItem items = 1; // List of menu items
+}
+
+message MenuItem {
+    string item_name = 1;
+    string description = 2;
+    double price = 3;
+}
+
+message order {
+    string customer_name = 1;
+    repeated string items = 2; // List of item names
+}
+
+message Receipt {
+    string order_id = 1;
+    string customer_name = 2;
+    repeated string items = 3; // List of item names
+    double total_price = 4;
+}
+
+message OrderStatus {
+    string order_id = 1;
+    string status = 2; // e.g., "preparing", "ready", "delivered"
+    string estimated_time = 3; // Estimated time for completion
+}
+
